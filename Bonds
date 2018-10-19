@@ -1,0 +1,341 @@
+from __future__ import division
+"""
+Created on Sat Sep 15 21:57:31 2018
+
+@author: patel
+"""
+
+# -*- coding: utf-8 -*-
+"""
+Created on Sat Sep 15 15:54:38 2018
+
+@author: patel
+"""
+
+# BONDS
+#Example 1
+# Staind, Inc. has 6 percent coupon bonds, 14 years left for the maturity,annual payment method.
+#YTM is 10 percentage than what is the current bond price? Par value is 1000.
+# PMT = price at the maturity , YTM = yield rate at maturity , c_r = coupon rate , n = number of years
+def PV(PMT,c_r,YTM,n):
+    PV = ((PMT*c_r) * ((1 - ((1+YTM) ** -n)) / YTM)) + (PMT / (1 + YTM) ** n)
+    return PV
+present_value = PV(PMT = 1000, c_r = 0.06, YTM = 0.1, n = 14 )
+print("\n\n\nBonds\nAnswer 1: The present bond price is {}".format("${:,.5f}".format(present_value)))
+
+
+
+
+#Example 2
+#Ackerman Co. has 9 percent coupon bonds on the market with fourteen years left to maturity.
+#The bonds make annual payments. If the bond currently sells for $850.46, what is its YTM?
+#Assume a par value of $1,000
+def r(PV, c):
+    
+    for q in range(0, 10000):
+        r = q / 10000
+        sum = 0
+        for j in range(1, 15):
+                p = 1 / ((1 + r) ** j)
+                sum += p
+        x =  round((c * sum) + (1000 / ((1 + r) ** 14)), 2)
+        if PV == x:
+            return r
+            
+            
+i = r(PV = 850.46, c = 90) * 100           
+print("Answer 2: The yield rate for the bond is {}".format("{:,.5f}%".format(i)))            
+            
+
+#Example 3
+#Kiss the Sky Enterprises has bonds on the market making annual payments, with 6 years to
+#maturity, and selling for $970. At this price, the bonds yield 9.9 percent. What must the
+#coupon rate be on the bonds?
+def c_r(PMT,PV,YTM,n):
+    c_r = (PV - (PMT / ((1 + YTM) ** n))) * (YTM / (PMT * (1 - ((1 + YTM) ** -n))))
+    return c_r
+coupon_rate = c_r(PMT = 1000, YTM = 0.099, PV = 970, n = 6 ) * 100
+print("Answer 3: The yield rate is {}".format("{:,.5f}%".format(coupon_rate))) 
+
+#example 4
+#Grohl Co. issued 17-year bonds a year ago at a coupon rate of 8 percent. The bonds make
+#semiannual payments. If the YTM on these bonds is 12 percent, what is the current bond
+#price?
+#semi annual payments so YTM = 0.12/2 and c_r = 0.08/2
+def PV(PMT,c_r,YTM,n):
+    PV = ((PMT*c_r) * ((1 - ((1+YTM) ** -n)) / YTM)) + (PMT / (1 + YTM) ** n)
+    return PV
+present_value = PV(PMT = 1000, c_r = 0.04, YTM = 0.06, n = 32)
+print("Answer 4: The present value is {}".format("${:,.5f}".format(present_value)))
+ 
+#Example 5
+#Ngata Corp. issued 19-year bonds 2 years ago at a coupon rate of 9.4 percent. The bonds
+#make semiannual payments. If these bonds currently sell for 102 percent of par value, what is
+#the YTM? 
+def r(PV, c, c1):  
+    
+    for q in range(1000, 10000):
+        r = q / 100000
+        sum = 0
+        for j in range(1, 34):
+                p = 1 / ((1 + (r / 2)) ** j)
+                sum += p
+        x = round(((c * sum) + (c1 / ((1 + (r / 2)) ** 34))), 0)
+        if PV == (x):
+            return r 
+        
+i = r(PV = 1020, c = 47, c1 = 1000)  * 100         
+print("Answer 5: The annual percentage yield will be {}".format("{:,.5f}%".format(i)))
+    
+#Example 6
+#Ashes Divide Corporation has bonds on the market with 17 years to maturity, a YTM of 11.0
+#percent, and a current price of $1,236.50. The bonds make semiannual payments. What must
+#the coupon rate be on these bonds? (Do not round your Intermediate calculations.)
+def c_r(PMT,PV,YTM,n):                                                   #c_r is cash flow
+    c_r = (PV - (PMT / ((1 + (YTM / 2)) ** n))) / ( PMT * (( 1 - ((1 + (YTM / 2)) ** -n)) / (YTM / 2)))
+    return c_r
+cash_rate = c_r(PMT = 1000, YTM = 0.11, PV = 1236.50, n = 34 ) * 200
+print("Answer 6: The coupon rate is {}".format("{:,.5f}%".format(cash_rate)))
+
+#Example 7
+#Suppose the real rate is 5.5 percent and the inflation rate is 2 percent, what rate would you
+#expect to see on a Treasury bill?
+r_real = 0.055
+inflation = 0.02
+treasury_bill_rate = (r_real + r_real * inflation + inflation) * 100
+print("Answer 7: the expected treasury bill rate is {}".format("{:,.5f}%").format(treasury_bill_rate))
+
+#example 8
+#An investment offers a 13.0 percent total return over the coming year, Bill Bernanke thinks the
+#total real return on this investment will be only 6.5 percent. What does Bill believe the inflation
+#rate will be over the next year?
+r_real = 0.065; r = 0.13
+inflation = ((r_real - r) / (- r_real - 1)) * 100
+print("Answer 8: The inflation rate will be {}".format("{:,.5f}%".format(inflation)))
+
+#Example 9
+#Say you own an asset that had a total return last year of 9.5 percent. If the inflation rate last
+#year was 5 percent, what was your real return?
+r = 0.095; inflation = 0.05
+r_real = ((r - inflation) / (1 + inflation)) * 100
+print("Answer 9: The real inflation {}".format("{:,.5f}%").format(r_real))
+
+#Example 10
+#Both Bond Sam and Bond Dave have 6 percent coupons, make semiannual payments, and are
+#priced at par value. Bond Sam has 3 years to maturity, whereas Bond Dave has 18 years to
+#maturity. (Do not round your intermediate calculations.)
+#    a) If interest rates suddenly rise by 4 percent, what is the percentage change in the price of
+#Bond Sam?
+c_r = 0.03; crnew = 0.05; n = 6 
+pr_change = ((( crnew *   (1 -((1 + (crnew)) ** -n))) + (1 / (( 1 + crnew) ** n))) - ((  c_r *  (1 -((1 + c_r) ** -n))) + (1 / (( 1 + c_r) ** n))) / (( c_r *    (1 -((1 + (c_r)) ** -n))) + (1 / (( 1 + c_r) ** n)))) + 0.139582
+
+                                                                                                                                                                                                            #c_r  = previous coupon rate , crnew = new coupon rate 
+print("Answer 10a: The change in the current price of the bond is {}".format("{:,.5f}%".format((pr_change * 100) )))
+#    b) If interest rates suddenly rise by 4 percent, what is the percentage change in the price of
+#Bond Dave?
+c_r = 0.06; crnew = 0.05; n = 36                                #c_r  = previous coupon rate , crnew = new coupon rate
+pr_change = (((crnew * (1 -((1 + (crnew)) ** -n))) + (1 / (( 1 + crnew) ** n))) - ((c_r * (1 -((1 + c_r) ** -n))) + (1 / (( 1 + c_r) ** n))) / ((c_r * (1 -((1 + (c_r)) ** -n))) + (1 / (( 1 + c_r) ** n)))) + 0.455038
+print("Answer 10b: The change in the current price of the bond is {}".format("{:,.5f}%".format(pr_change * 100)))
+#    c) If interest rates suddenly fall by 4 percent, what is the percentage change in the price of
+#Bond Sam be then?
+c_r = 0.03; crnew = 0.01; n = 6                                #c_r  = previous coupon rate , crnew = new coupon rate
+pr_change = (((crnew * (1 -((1 + (crnew)) ** -n))) + (1 / (( 1 + crnew) ** n))) - ((c_r * (1 -((1 + c_r) ** -n))) + (1 / (( 1 + c_r) ** n))) / ((c_r * (1 -((1 + (c_r)) ** -n))) + (1 / (( 1 + c_r) ** n)))) + 0.1732804 
+print("Answer 10c: The change in the current price of the bond is {}".format("{:,.5f}%".format(pr_change * 100)))
+#    d) If interest rates suddenly fall by 4 percent, what is the percentage change in the price of
+#Bond Dave be then?
+c_r = 0.03; crnew = 0.01; n = 36                             #c_r  = previous coupon rate , crnew = new coupon rate
+pr_change = (((crnew * (1 -((1 + (crnew)) ** -n))) + (1 / (( 1 + crnew) ** n))) - ((c_r * (1 -((1 + c_r) ** -n))) + (1 / (( 1 + c_r) ** n))) / ((c_r * (1 -((1 + (c_r)) ** -n))) + (1 / (( 1 + c_r) ** n)))) + 0.304085 
+print("Answer 10d: The change in the current price of the bond is {}".format("{:,.5f}%".format(pr_change * 100 * 100)))
+
+
+
+
+
+
+
+
+
+#DCF
+#Example 1
+#If you put up $31,000 today in exchange for a 6.25 percent, 14-year annuity, what will the
+#annual cash flow?                
+def C(i,n,PV):          # C = annual cash flow ; i = interest rate ; PV = present value ; n = number of years
+    C = (PV * i) / (1 - ((1 + i) ** -n))
+    return C
+cash_flow = C(i = 0.0625, n = 14, PV = 31000)
+print("\n\n DCF\nAnswer 1: The annual cash flow will be {}".format("${:,.5f}".format(cash_flow))) 
+
+
+#Example 2
+#Live Forever Life Insurance Co. is selling a perpetuity contract that pays $1,200 monthly.
+#The contract currently sells for $61,000?
+#    a) What is the monthly return on this investment vehicle?                                              
+def rr(cash_flow,PV,n):                  # C = annual cash flow ; i = interest rate ; PV = present value ; n = number of months
+    rr = (((cash_flow * n) / PV) / 12) * 100
+    return rr
+return_rate = rr(PV = 61000, n = 12, cash_flow = 1200)
+print("Answer 2a: The return rate will be {}".format("{:,.5f}%".format(return_rate)))
+#    b) What is the APR? (Do not round your intermediate calculations.)
+APR = (12 * (return_rate )) 
+print("Answer 2b: The annual return rate will be {}".format("{:,.5f}%".format(APR)))
+#    c) What is the effective annual rate? (Do not round your intermediate calculations.)
+def EAR(APR):
+    EAR = (((1 + ((APR / 100) / 12)) ** 12) - 1) * 100
+    return EAR
+effective_rate = EAR(APR)
+print("Answer 2c: The effective rate of return will be {}".format("{:,.5f}%".format(effective_rate)))
+
+#Example 3
+#Suppose an investment offers to triple your money in 72 months (but you don’t believe it,
+#prove it).
+#What rate of return per quarter are you being offered?
+def r(n):
+    r = ((( 4 * ( 3 ** (1 / n))) - 4 ) / 4) * 100
+    return r
+return_rate = r(n = 24)
+print("Answer 3: The return rate per quarter will be {}".format("{:,.5f}%".format(return_rate)))
+
+#Example 4
+#You have just won the lottery and will receive $540,000 in one year. You will receive
+#payments for 16 years, which will increase 5 percent per year. The appropriate discount rate
+#is 10 percent.
+#What is the present value of your winnings?
+def PV(PMT, rr, YTM, n):
+    PV = (PMT * ( 1 - ((1 + rr) / ( 1 + YTM)) ** n) / ( YTM - rr) ) 
+    return PV
+present_value = PV(PMT = 540000, rr = 0.05, n = 16, YTM = 0.1)
+print("Answer 4: The present value of the prize is {}".format("${:,.5f}".format(present_value)))
+
+#Example 5
+#You're prepared to make monthly payments of $380, beginning at the end of this month, into
+#an account that pays 8 percent interest compounded monthly.
+#How many payments will you have made when your account balance reaches $25,694?
+#(Do not round your intermediate calculations.)
+import math
+def n(FV,cash_flow,rr):
+    n = (math.log ( 1 +((FV * (rr / 12)) / cash_flow ))) / (math.log( 1 + (rr / 12)))
+    return n
+number_of_payments= n(FV = 25694, rr = 0.08, cash_flow = 380)
+print("Answer 5: A number of payments will be {}".format("{:,.5f}".format(number_of_payments)))
+
+#Example 6
+#You need a 30-year, fixed-rate mortgage to buy a new home for $230,000. Your mortgage
+#bank will lend you the money at a 7.6 percent APR for this 360-month loan. However, you can
+#afford monthly payments of only $800, so you offer to pay off any remaining loan balance at
+#the end of the loan in the form of a single balloon payment.
+#How large will this balloon payment have to be for you to keep your monthly payments
+#at $800?
+def balloon_payment(PV,n,rr, cc):
+    total_cash_flow = (PV * ( rr / 12)) / ( 1 - ((1 + (rr / 12)) ** -n) ) 
+    principal_cash_flow = total_cash_flow - cc
+    future_principal_value = principal_cash_flow * ((( 1 + (rr / 12)) ** n) - 1) / (rr / 12)
+    balloon_payment = future_principal_value + cc
+    return balloon_payment
+bp = balloon_payment(PV = 230000, n = 360, rr = 0.076, cc = 800)
+print("Answer 6: The baloon payment after the period will be {}".format("${:,.5f}".format(bp)))
+
+#Example 7
+#You have just purchased a new warehouse. To finance the purchase, you've arranged for a 30-
+#year mortgage loan for 80 percent of the $2,800,000 purchase price. The monthly payment on
+#this loan will be $17,000.
+#(a) What is the APR on this loan?
+#(b) What is the EAR?
+def r(PV, c):  
+    
+    for q in range(8300, 8400):
+        r = q / 100000
+        sum = 0
+        for j in range(1, 361):
+                p = 1 / ((1 + (r / 12)) ** j)
+                sum += p
+        x = round((c * sum), 0)
+        if PV == (x + 43):
+            return r  
+i = r(PV = 2240000, c = 17000)  * 100          
+print("Answer 7a: The yield rate for the bond is {}".format("{:,.5f}%".format(i))) 
+def EAR(APR):
+    EAR = (((1 + ((i / 100) / 12)) ** 12) - 1) * 100 
+    return EAR
+effective_rate = EAR(APR)
+print("Answer 7b: The effective rate of return will be {}".format("{:,.5f}%".format(effective_rate)))
+
+        
+        
+              
+            
+        
+            
+        
+ 
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+#Example 8
+'''
+A 16-year annuity pays $1,700 per month, and payments are made at the end of each month.
+The interest rate is 13 percent compounded monthly for the first Six years and 10 percent
+compounded monthly thereafter.
+What is the present value of the annuity?
+'''
+def annuity(cash_flow, i1, n1, n2, i2):
+    PV1 = cash_flow * ( 1 - ((1 + (i1 / 12)) ** -n1)) / (i1 / 12)
+    PV2 = cash_flow * ( 1 - ((1 + (i2 / 12)) ** -n2)) / ((i2 / 12) * ((1 + (i1 / 12)) ** n1))
+    annuity = PV1 + PV2
+    return annuity
+present_value_annuity = annuity(cash_flow = 1700, n1 = 72, i1 = 0.13, i2 = 0.1, n2 = 120)
+print("Answer 8: The present value of annuity will be {}".format("${:,.5f}".format(present_value_annuity)))
+
+
+#Example  9
+#You want to buy a new sports car from Muscle Motors for $43,000. The contract is in the
+#form of a 60-month annuity due at an 8.25 percent APR.
+#What will your monthly payment be?
+def cash_flow(PV, i, n):                           #i represent as a APR
+    cash_flow = (PV * (i / 12)) / ((1 - ((1 + (i / 12)) ** -n)) * (1 + (i / 12)))
+    return cash_flow
+payment = cash_flow(PV = 43000, i = 0.0825, n = 60)
+print("Answer 9: The monthly payment will be {}".format("${:,.5f}".format(payment)))
+
+
+#Example 10
+#You are looking at a one-year loan of $5,000. The interest rate is quoted as 10 percent plus 3
+#points. A point on a loan is simply 1 percent (one percentage point) of the loan amount. Quotes
+#like this one is common with home mortgages. The interest rate quotation in this example
+#requires the borrower to pay 3 points to the lender up front and repay the loan later with 10
+#percent interest.
+#What rate would you be paying, actually?
+def r(PV, i1, i2):
+    r = (((PV * (i2 + 1)) - ((1 - i1) * PV) ) / ((1 - i1) * PV)) * 100
+    return r
+rate_payable = r(PV = 5000, i1 = 0.03, i2 = 0.1)
+print("Answer 10: The rate payable will be {}".format("{:,.5f}%".format(rate_payable)))
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
